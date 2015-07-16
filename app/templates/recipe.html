@@ -1,0 +1,22 @@
+<!-- extend from base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="col-md-9 col-med-offset-1">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<h1>Create a New Recipe</h1>
+			<form action="" method="post" name="recipe">
+				{{ form.hidden_tag() }}
+				<table>
+					<tr valign="top">
+						<td>New Recipe:</td>
+						<td>{{ form.name(size=24) }}</td>
+						<td><input type="submit" value="Create"></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}

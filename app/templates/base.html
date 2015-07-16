@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		{% if title %}
+		<title>{{ title }} - Krispr</title>
+		{% else %}
+		<title>Welcome to Krispr</title>
+		{% endif %}
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- Bootstrap CSS
+		<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css"> -->
+		
+		<link href="../static/css/bootstrap.css" rel="stylesheet" id="bootstrap-css">
+		<link rel="stylesheet" href="../static/css/font-awesome.min.css">
+		
+		<!-- Custom CSS -->
+		<link rel="stylesheet" href="../static/css/custom.css">
+		
+		<!-- jQuery -->
+		<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+		
+		<!-- Boostrap javascript 
+		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>-->
+		<script src="../static/js/bootstrap.js"></script>
+		<!-- Google Font -->
+		<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
+	<body>
+		<div class="container-fluid">
+			<nav class="navbar navbar-default">
+				<div class="container">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-4">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" href="{{ url_for('index') }}">Krispr</a>
+					</div>
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse" id="navbar-collapse-4">
+						<ul class="nav navbar-nav navbar-right">
+							<li><a href="{{ url_for('index') }}">Home</a></li>
+							{% if g.user.is_authenticated() %}
+							<li><a href="{{ url_for('pantry') }}">Pantry</a></li>
+							<li><a href="{{ url_for('recipe') }}">Add Recipe</a></li>
+							<li>
+								<a class="btn btn-default btn-outline btn-circle collapsed"  data-toggle="collapse" href="#nav-collapse4" aria-expanded="false" aria-controls="nav-collapse4">Profile<i class=""></i> 
+								</a>
+							</li>
+						</ul>
+						<ul class="collapse nav navbar-nav nav-collapse slide-down" role="search" id="nav-collapse4">
+							<li><a href="#">Support</a></li>
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><img class="img-circle" src="{{ g.user.avatar(20) }}" alt="{{ g.user.nickname }}" width="20" /> {{ g.user.nickname }} <span class="caret"></span></a>
+								<ul class="dropdown-menu" role="menu">
+									<li><a href="{{ url_for('user', nickname=g.user.nickname) }}">Profile</a></li>
+									<li><a href="{{ url_for('edit_profile') }}">About Me</a></li>
+									<li class="divider"></li>
+									<li><a href="{{ url_for('logout') }}">Logout</a></li>
+								</ul>
+							{% endif %}
+							</li>
+						</ul>
+					</div><!-- /.navbar-collapse -->
+				</div><!-- /.container -->
+			</nav><!-- /.navbar -->
+		</div><!-- /.container-fluid -->
+		{% with messages = get_flashed_messages() %}
+			{% if messages %}
+				<div class="container">
+					{% for message in messages %}
+						<div class="alert alert-info" role="alert">
+							{{ message }}
+						</div>
+					{% endfor %}
+				</div>
+			{% endif %}
+		{% endwith %}
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="col-md-2">
+						{% if g.user.is_authenticated() %}
+						<div class="sidebar-nav">
+							<div class="well" style="width:180px; padding: 8px 0;">
+								<ul class="nav nav-list">       
+									<li><a href="{{ url_for('index') }}"><i class="icon-home"></i> Home</a></li>
+									<li><a href="#"><i class="icon-envelope"></i> Messages <span class="badge badge-info">4</span></a></li>
+									<li><a href="#"><i class="icon-comment"></i> Comments <span class="badge badge-info">10</span></a></li>
+									<li class="active"><a href="{{ url_for('followers', nickname=g.user.nickname) }}"><i class="icon-user"></i> Followers</a></li>
+									<li class="divider"></li>
+									<li><a href="#"><i class="icon-comment"></i> Settings</a></li>
+									<li><a href="{{ url_for('logout') }}"><i class="icon-share"></i> Logout</a></li>
+								</ul>
+							</div>
+						</div>
+						{% endif %}
+					</div>
+					{% block content %}{% endblock %}
+				</div>	
+			</div>
+		</div>
+	</body>
+</html>

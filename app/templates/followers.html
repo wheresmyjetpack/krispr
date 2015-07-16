@@ -1,0 +1,21 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="col-md-9">
+	<div class="panel panel-default">
+		{% for follower in user.followers %}
+			<div class="col-md-3">
+				<div class="container">
+					<div class="profile-header-container">   
+						<div class="profile-header-img">
+							<img class="img-circle" src="{{ follower.avatar(90) }}" />
+						</div>
+						<a href="{{ url_for('user', nickname=follower.nickname) }}">{{ follower.nickname }}</a>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+</div>
+{% endblock %}

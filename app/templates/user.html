@@ -1,0 +1,84 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+<!--<div class="row profile">-->
+	<div class="col-md-6">
+		<div class="profile-content">
+		{% for recipe in user.recipes %}
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">{{ recipe.name }}</h3>
+				</div>
+				<div class="panel-body">
+					{% for ingredient in recipe.ingredients %}
+						{{ ingredient.name }}<br>
+					{% endfor %}
+				</div>
+			</div>
+		{% endfor %}
+		</div>
+	</div>
+	<div class="col-md-3">
+		<div class="profile-sidebar">
+			<!-- SIDEBAR USERPIC -->
+			<div class="profile-userpic">
+				<img src="{{ user.avatar(128) }}" class="img-responsive" alt="">
+			</div>
+			<!-- END SIDEBAR USERPIC -->
+			<!-- SIDEBAR USER TITLE -->
+			<div class="profile-usertitle">
+				<div class="profile-usertitle-name">
+					{{ user.nickname }}
+				</div>
+				<!--
+				<div class="profile-usertitle-job">
+					Developer
+				</div>
+				-->
+			</div>
+			<!-- END SIDEBAR USER TITLE -->
+			<!-- SIDEBAR BUTTONS -->
+			<div class="profile-userbuttons">
+				{% if not g.user.is_following(user) %}
+					<a class="btn btn-success btn-sm" href="{{ url_for('follow', nickname=user.nickname) }}">
+						Follow
+					</a>
+				{% elif g.user.is_following(user) %}
+					<a class="btn btn-success btn-sm" href="{{ url_for('unfollow', nickname=user.nickname) }}">
+						Unfollow
+					</a>
+				{% endif %}
+				<button type="button" class="btn btn-danger btn-sm">Message</button>
+			</div>
+			<!-- END SIDEBAR BUTTONS -->
+			<!-- SIDEBAR MENU -->
+			<div class="profile-usermenu">
+				<ul class="nav">
+					<li class="active">
+						<a href="{{ url_for('index') }}">
+						<i class="glyphicon glyphicon-home"></i>
+						Home </a>
+					</li>
+					<li>
+						<a href="{{ url_for('edit_profile') }}">
+						<i class="glyphicon glyphicon-user"></i>
+						About </a>
+					</li>
+					<li>
+						<a href="{{ url_for('recipe') }}">
+						<i class="glyphicon glyphicon-cutlery"></i>
+						Add a Recipe </a>
+					</li>
+					<li>
+						<a href="{{ url_for('pantry') }}">
+						<i class="glyphicon glyphicon-th-list"></i>
+						Pantry </a>
+					</li>
+				</ul>
+			</div>
+			<!-- END MENU -->
+		</div>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,37 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="col-md-6">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">Edit Your Profile</h3>
+		</div>
+		<div class="panel-body">
+			<form action="" method="post" name="edit_profile">
+				{{ form.hidden_tag() }}
+				<table>
+					<tr>
+						<td>Your nickname:</td>
+						<td>
+							{{ form.nickname(size=24) }}
+							{% for error in form.nickname.errors %}
+							<br><span style="color: red;">[{{ error }}]</span>
+							{% endfor %}
+						</td>
+					</tr>
+					<tr>
+						<td>About yourself:</td>
+						<td>{{ form.about_me(cols=32, rows=4) }}</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="submit", value="Save Changes"></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}
+

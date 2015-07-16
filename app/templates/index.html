@@ -1,0 +1,57 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+<script>
+$(function () {
+    $('.navbar-toggle').click(function () {
+        $('.navbar-nav').toggleClass('slide-in');
+        $('.side-body').toggleClass('body-slide-in');
+        $('#search').removeClass('in').addClass('collapse').slideUp(200);
+
+        /// uncomment code for absolute positioning tweek see top comment in css
+        //$('.absolute-wrapper').toggleClass('slide-in');
+        
+    });
+   
+   // Remove menu for searching
+   $('#search-trigger').click(function () {
+        $('.navbar-nav').removeClass('slide-in');
+        $('.side-body').removeClass('body-slide-in');
+
+        /// uncomment code for absolute positioning tweek see top comment in css
+        //$('.absolute-wrapper').removeClass('slide-in');
+
+    });
+});
+</script>
+<div class="col-md-9">
+	{% for recipe in g.user.followed_recipes() %}
+		<div class="col-md-2">
+			<div class="profile-header-container">   
+				<div class="profile-header-img">
+					<img class="img-circle" src="{{ recipe.author.avatar(90) }}" />
+				</div>
+			</div>
+		</div> 
+		<div class="col-md-10">
+			<p><a href="{{ url_for('user', nickname=recipe.author.nickname) }}">{{ recipe.author.nickname }}</a> posted: </p>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">{{ recipe.name }}</h3>
+				</div>
+				<div class="panel-body">
+					<i>{{ recipe.timestamp }}</i>
+					<br>
+					<ul>
+						{% for ingredient in recipe.ingredients %}
+							<li>{{ ingredient.name }}</li>
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+		</div>
+		<hr>
+	{% endfor %}
+</div>
+{% endblock %}

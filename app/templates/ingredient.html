@@ -1,0 +1,50 @@
+<!-- extend from base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="col-md-9 col-med-offset-1">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<h1>Ingredients for recipe "{{ recipe.name }}"</h1>
+			<form action="" method="post" name="edit_ingredients">
+				{{ form.hidden_tag() }}
+				<table>
+					<tr>
+						<td>Ingredient name:</td>
+						<td>Amount:</td>
+					</tr>
+					<tr>
+						<td>{{ form.name(size=24) }}</td>
+						<td>{{ form.amount(size=24) }}</td>
+					</tr>
+					<tr>
+						<td><input type="submit" value="Add Ingredient"></td>
+					</tr>
+				</table>
+			</form><hr>
+			{% if recipe.ingredients %}
+			<div class="container">
+				<div class="row col-md-6 col-md-offset-2 custyle">
+					<table class="table table-striped custab">
+						<thead>
+							<tr>
+								<th><b>Ingredient</b></th>
+								<th><b>Amount</b></th>
+							</tr>
+						</thead>
+						{% for ingredient in recipe.ingredients %}
+							<tr>
+								<td>{{ ingredient.name }}</td>
+								<td>{{ ingredient.amount }}</td>
+							</tr>
+						{% endfor %}
+					</table>
+				</div>
+			</div>
+			{% else %}
+				<h2>No Ingredients added yet...</h2>
+			{% endif %}
+		  </div>
+	</div>
+</div>
+{% endblock %}

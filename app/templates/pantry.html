@@ -1,0 +1,59 @@
+<!-- extends base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="col-md-9 col-med-offset-1">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<table>
+				<tr valign="top">
+					<td><img src="{{ user.avatar(128) }}"></td>
+					<td>
+						<h1>{{ user.nickname }}'s Pantry</h1></td>
+				</tr>
+			</table>
+			<table>
+				<form action="" method="post" name="edit_pantry">
+					{{ form.hidden_tag() }}
+					<tr>
+						<td>Item name:</td>	
+						<td>Amount:</td>
+					</tr>
+					<tr>
+						<td>{{ form.name(size=24) }}</td>
+						<td>{{ form.amount(size=24) }}</td>
+					</tr>
+					<tr>
+						<td><input type="submit" value="Add Item"></td>
+					</tr>
+				</form>
+			</table><br>
+			<hr>
+			{% if pantry %}
+			<div class="container">
+				<div class="row col-md-6 col-md-offset-2 custyle">
+					<table class="table table-striped custab">
+						<thead>
+							<tr>
+								<th><b>Item</b></th>
+								<th><b>Amount</b></th>
+								<th></th>
+							</tr>
+						</thead>
+						{% for pantry_item in pantry %}
+							<tr>
+								<td>{{ pantry_item.name }}</td>
+								<td>{{ pantry_item.amount }}</td>
+								<td><a class="btn btn-default" href="{{ url_for('pantry_remove', pantry_item_name=pantry_item.name) }}">Remove</a></td>
+							</tr>
+						{% endfor %}
+					</table>
+				</div>
+			</div>
+			{% else %}
+			<h2>The Pantry is empty. Add some items!</h2>
+			{% endif %}
+		</div>
+	</div>
+</div>
+{% endblock %}
